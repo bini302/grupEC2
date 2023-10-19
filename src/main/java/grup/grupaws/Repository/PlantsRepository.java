@@ -15,11 +15,11 @@ public interface PlantsRepository extends JpaRepository<PlantsEntity, Long> {
     Optional<PlantsEntity> findByPlantsId(Long plantsId);
 
     @Query(value = "select p.plantsId "+
-            "from plants p, answerPlants a "+
+            "from plants p, answerplants a "+
             "where a.answerId=:userAnswerId "+
             "and abs(p.plantsTemperature-a.answerTemperature)=( "+
             "select  abs(p1.plantsTemperature-a1.answerTemperature) "+
-            "from plants p1, answerPlants a1 "+
+            "from plants p1, answerplants a1 "+
             "where a1.answerId=:userAnswerId "+
             "order by  abs(p1.plantsTemperature-a1.answerTemperature) "+
             "limit 1)"+
@@ -28,11 +28,11 @@ public interface PlantsRepository extends JpaRepository<PlantsEntity, Long> {
     Long findTemperatureABS(@Param("userAnswerId") Long userAnswerId);
 
     @Query(value = "SELECT p.plantsId "+
-            "FROM plants p, answerPlants a "+
+            "FROM plants p, answerplants a "+
             "WHERE a.answerId=:userAnswerId "+
             "AND abs(p.plantsLight-a.answerLight)=( "+
             "SELECT  abs(p1.plantsLight-a1.answerLight) "+
-            "FROM plants p1, answerPlants a1 "+
+            "FROM plants p1, answerplants a1 "+
             "WHERE a1.answerId=:userAnswerId "+
             "ORDER BY abs(p1.plantsLight-a1.answerLight) "+
             "LIMIT 1)"+
@@ -41,11 +41,11 @@ public interface PlantsRepository extends JpaRepository<PlantsEntity, Long> {
     Long findLightABS(@Param("userAnswerId") Long userAnswerId);
 
     @Query(value = "SELECT p.plantsId "+
-            "FROM plants p, answerPlants a "+
+            "FROM plants p, answerplants a "+
             "WHERE a.answerId=:userAnswerId "+
             "AND abs(p.plantsWater-a.answerWater)=( "+
             "SELECT abs(p1.plantsWater-a1.answerWater) "+
-            "FROM plants p1, answerPlants a1 "+
+            "FROM plants p1, answerplants a1 "+
             "WHERE a1.answerId=:userAnswerId "+
             "ORDER BY  abs(p1.plantsWater-a1.answerWater) "+
             "LIMIT 1)" +
@@ -54,11 +54,11 @@ public interface PlantsRepository extends JpaRepository<PlantsEntity, Long> {
     Long findWaterABS(@Param("userAnswerId") Long userAnswerId);
 
     @Query(value = "SELECT p.plantsId " +
-            "FROM plants p, answerPlants a " +
+            "FROM plants p, answerplants a " +
             "WHERE a.answerId = :userAnswerId " +
             "AND ABS(p.plantsLevel - a.answerLevel) = ( " +
             "SELECT ABS(p1.plantsLevel - a1.answerLevel) " +
-            "FROM plants p1, answerPlants a1 " +
+            "FROM plants p1, answerplants a1 " +
             "WHERE a1.answerId = :userAnswerId " +
             "ORDER BY ABS(p1.plantsLevel - a1.answerLevel) " +
             "LIMIT 1)" +

@@ -16,12 +16,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     public void save(MemberDTO memberDTO){
-        // 1 dto->entity 변환(서비스 클래스에서 변환하는 메서드 추가/엔티티에서 변환/ ...
-        // 2 repository의 save 메서드 호출
         memberDTO.setMemberPassword(BCrypt.hashpw(memberDTO.getMemberPassword(), BCrypt.gensalt()));
         memberRepository.save(MemberEntity.toMemberEntity(memberDTO));
-        // repository의 save메서드 호출(조건. 엔티티 객체를 넘겨줘야함)
-        //jpa어쩌구 상속받아 쓰는거라 repository에 save 직접 쓴게 없음
     }
     public MemberDTO login(MemberDTO memberDTO) {
         // 1 회원이 입력한 이메일 db 조회

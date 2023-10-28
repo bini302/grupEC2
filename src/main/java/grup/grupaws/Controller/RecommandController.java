@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -41,38 +42,35 @@ public class RecommandController {
 
         Long userAnswerId = (Long) session.getAttribute("userAnswerId");
         List<Map<Long, Float>> resultingPlantsList = new ArrayList<>();
-
         RecommandDTO recommandDTO = recommandService.getAnswerById(userAnswerId);
         PlantsDTO plantsDTO;
 
         Long levelABSId = recommandService.findLevelABS(userAnswerId);
         model.addAttribute("levelABSId", levelABSId);
-
         plantsDTO = recommandService.getPlantsById(levelABSId);
         if (!containsPlantsId(resultingPlantsList, levelABSId)) {
             Map<Long, Float> resultingMap = new HashMap<>();
             getResulting(levelABSId, recommandDTO, plantsDTO, resultingMap, resultingPlantsList);
         }
+
         Long temperatureABSId = recommandService.findTemperatureABS(userAnswerId);
         model.addAttribute("temperatureABSId", temperatureABSId);
-
         plantsDTO = recommandService.getPlantsById(temperatureABSId);
-
         if (!containsPlantsId(resultingPlantsList, temperatureABSId)) {
             Map<Long, Float> resultingMap = new HashMap<>();
             getResulting(temperatureABSId, recommandDTO, plantsDTO, resultingMap, resultingPlantsList);
         }
+
         Long lightABSId = recommandService.findLightABS(userAnswerId);
         model.addAttribute("lightABSId", lightABSId);
-
         plantsDTO = recommandService.getPlantsById(lightABSId);
         if (!containsPlantsId(resultingPlantsList, lightABSId)) {
             Map<Long, Float> resultingMap = new HashMap<>();
             getResulting(lightABSId, recommandDTO, plantsDTO, resultingMap, resultingPlantsList);
         }
+
         Long waterABSId = recommandService.findWaterABS(userAnswerId);
         model.addAttribute("waterABSID", waterABSId);
-
         plantsDTO = recommandService.getPlantsById(waterABSId);
         if (!containsPlantsId(resultingPlantsList, waterABSId)) {
             Map<Long, Float> resultingMap = new HashMap<>();
@@ -96,6 +94,13 @@ public class RecommandController {
             }
         }
         return resultPlantsEntityList;
+    }
+
+    @PostMapping("/api/resultPlantsSelected")
+    public void setPlantsSelected(@RequestBody String plantsName) throws IOException {
+        String replacedPlantsName=plantsName.replace("\"", "");
+        System.out.println("set Selected plantsName: " + replacedPlantsName);
+        recommandService.setPlantsSelected(replacedPlantsName);
     }
 
     private boolean containsPlantsId(List<Map<Long, Float>> list, Long plantsId) {

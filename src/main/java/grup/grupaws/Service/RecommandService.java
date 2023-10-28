@@ -17,14 +17,9 @@ public class RecommandService {
     private final RecommandRepository recommandRepository;
     private final PlantsRepository plantsRepository;
 
-    // 질문지에서 받은 내용을 그대로 저장
     public RecommandDTO question(RecommandDTO recommandDTO) {
-        // 1 dto->entity 변환(서비스 클래스에서 변환하는 메서드 추가/엔티티에서 변환/ ...
-        // 2 repository의 question 메서드 호출
         RecommandEntity recommandEntity = RecommandEntity.toRecommandEntity(recommandDTO);
         recommandRepository.save(recommandEntity);
-        // repository의 question메서드 호출(조건. 엔티티 객체를 넘겨줘야함)
-        //jpa어쩌구 상속받아 쓰는거라 repository에 question 직접 쓴게 없음
         RecommandDTO dto= RecommandDTO.toRecommandDTO(recommandEntity);
         return dto;
     }

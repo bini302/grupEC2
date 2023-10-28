@@ -16,8 +16,6 @@ public class RecommandEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //auto_increment
     private Long answerId;
-    //    @Column(name = "userEmail")
-//    private String userEmail;
     @Column(name = "answerTemperature")
     private BigDecimal answerTemperature;
     @Column(name = "answerLight")
